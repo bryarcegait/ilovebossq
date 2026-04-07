@@ -106,7 +106,7 @@
             <!-- Bubu and Dudu GIF -->
             <img src="images/dudu.gif" alt="Bubu and Dudu Bear">
         </div>
-        <h1>Boss Q, do you love me?</h1>
+        <h1>Do you love me?</h1>
         <div class="buttons" id="buttonArea">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
@@ -117,8 +117,10 @@
         <div class="gif-container">
             <img src="images/bear-kisses.gif" alt="Bubu Dudu Kiss">
         </div>
-        <h1>Yay! I love you too, Boss Q! ❤️</h1>
+        <h1>Yay! I love you too! ❤️</h1>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
     <script>
         const yesBtn = document.getElementById('yesBtn');
@@ -150,6 +152,44 @@
             mainContainer.style.display = 'none';
             successContainer.style.display = 'block';
             document.body.style.overflow = 'auto'; // Re-enable if needed
+
+            // Confetti effect
+            const duration = 15 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const heart = confetti.shapeFromPath({ 
+                path: 'M167 10c-33.7 0-61 27.3-61 61 0 35.1 29 70.8 71.3 112.6l12.7 12.5 12.7-12.5C246 141.8 275 106.1 275 71c0-33.7-27.3-61-61-61-20.8 0-38.7 10.2-49.4 25.8C153.9 20.2 136 10 115.2 10z' 
+            });
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    shapes: [heart],
+                    colors: ['#ff4d6d', '#ff8fa3', '#ffb3c1', '#ffccd5']
+                });
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    shapes: [heart],
+                    colors: ['#ff4d6d', '#ff8fa3', '#ffb3c1', '#ffccd5']
+                });
+            }, 250);
         });
     </script>
 </body>
