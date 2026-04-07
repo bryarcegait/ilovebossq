@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Do you love me?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            font-family: 'Fredoka', sans-serif;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 85%;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.2rem;
+            margin: 20px 0;
+        }
+
+        .gif-container img {
+            width: 200px;
+            border-radius: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            min-height: 50px;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 500;
+            touch-action: manipulation;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background-color: #ff1a4a;
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #444;
+            position: relative;
+            transition: left 0.2s ease, top 0.2s ease;
+        }
+
+        .success-content {
+            display: none;
+        }
+
+        .success-content img {
+            width: 200px;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 30px 20px;
+            }
+            button {
+                padding: 10px 25px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div class="gif-container">
+            <!-- Bubu and Dudu GIF -->
+            <img src="images/dudu.gif" alt="Bubu and Dudu Bear">
+        </div>
+        <h1>Do you love me?</h1>
+        <div class="buttons" id="buttonArea">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div class="container success-content" id="successContainer">
+        <div class="gif-container">
+            <img src="images/bear-kisses.gif" alt="Bubu Dudu Kiss">
+        </div>
+        <h1>Yay! I love you too! ❤️</h1>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainContainer = document.getElementById('mainContainer');
+        const successContainer = document.getElementById('successContainer');
+
+        const moveNoButton = (e) => {
+            if (e.type === 'touchstart') e.preventDefault();
+            
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.random() * maxX);
+            const randomY = Math.max(padding, Math.random() * maxY);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        };
+
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton, {passive: false});
+        // Click also handled for backup
+        noBtn.addEventListener('click', moveNoButton);
+
+        yesBtn.addEventListener('click', () => {
+            mainContainer.style.display = 'none';
+            successContainer.style.display = 'block';
+            document.body.style.overflow = 'auto'; // Re-enable if needed
+        });
+    </script>
+</body>
+</html>
